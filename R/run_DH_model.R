@@ -136,11 +136,12 @@ run_DH_model <- function(Tair,Rw,Rw_vol=FALSE,Cpool,dayl = NULL,week, year,param
     axis(4, ylim=c(0.0,0.0052), col="red",col.axis="red",las=1)
 
     par(mar=c(3,5,0,5))
-    plot(Cpool.df$dates,Dens.df$Dens,ylim=c(0,2000),xlab="",xaxt='n', ylab="Density(kg/m3)",xaxs="i",yaxs="i")
+    plot(Cpool.df$dates,Dens.df$Dens,ylim=c(0,2000),xlab="", xaxt='n', ylab="Density(kg/m3)",xaxs="i",yaxs="i")
     # useful for later, when labelling the plots with a,b,c,d,..
     # mtext(side=3,line=-3.2,"(d)",adj=0,cex=1.2,padj=1,outer=TRUE)
 
     #axis(1, at=seq(1,52,52), labels=2000)
+    axis(1,at= c(1,52,52*2,52*3),unique(Dens.df$year))
     mtext("Years", side=1 ,col="black",cex=1,line=2,outer=FALSE)
 
   }
