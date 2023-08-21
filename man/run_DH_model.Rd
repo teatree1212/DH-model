@@ -7,7 +7,7 @@
 run_DH_model(
   Tair,
   Rw,
-  Rw_vol = TRUE,
+  Rw_vol = FALSE,
   Cpool,
   dayl = NULL,
   week,
@@ -21,11 +21,11 @@ run_DH_model(
 
 \item{Rw}{vector with weekly average relative soil water content}
 
-\item{Rw_vol}{whether input for soil moisture is given as volumetric or relative soil water content}
+\item{Rw_vol}{whether input for soil moisture is given as volumetric (TRUE) or relative soil (FALSE) water content. default: FALSE}
 
 \item{Cpool}{vector with weekly average nonstructural carbohydrates}
 
-\item{dayl}{vector with weekly average daylength ( can be created using the daylength function and wiht latitude input in this package)
+\item{dayl}{vector with weekly average daylength ( can be created using the daylength function and with latitude input in this package)
 daylength for growth initialisation is an addition to the DH-model, it was not originally part of it.}
 
 \item{week}{vector with week number of a given year}
@@ -47,12 +47,12 @@ Outputs a data frame with weekly entries of simulated density (Dens), ring incre
 data(DH_model_ins)
 w = length(daily_tree_135)
 
-DH_out <-  run_DH_model_mod(Tair  = DH_model_ins$Inputs_GRA_3years$Tair,
-                       Rw        =  DH_model_ins$Inputs_GRA_3years$SW,
-                       Rw_vol    = TRUE
-                       Cpool     =  DH_model_ins$Inputs_GRA_3years$Cpool,
+DH_out <-  run_DH_model_mod(Tair  = DH_model_ins$Inputs_ABR_4years$Tair,
+                       Rw        =  DH_model_ins$Inputs_ABR_4years$SW,
+                       Rw_vol    = FALSE
+                       Cpool     =  DH_model_ins$Inputs_ABR_4years$Cpool,
                        params    =   DH_model_ins$Parameters$best,
-                       week
-                       year,
+                       week = DH_model_ins$Inputs_ABR_4years$week,
+                       year = DH_model_ins$Inputs_ABR_4years$year.datetime.,
                        DH_plot = TRUE)
 }

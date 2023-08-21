@@ -5,9 +5,9 @@
 #' Outputs a data frame with weekly entries of simulated density (Dens), ring increment ( Incr ), and cell numbers (Nr).
 #' @param Tair vector with weekly average air temperature
 #' @param Rw vector with weekly average relative soil water content
-#' @param Rw_vol whether input for soil moisture is given as volumetric or relative soil water content
+#' @param Rw_vol whether input for soil moisture is given as volumetric (TRUE) or relative soil (FALSE) water content. default: FALSE
 #' @param Cpool vector with weekly average nonstructural carbohydrates
-#' @param dayl vector with weekly average daylength ( can be created using the daylength function and wiht latitude input in this package)
+#' @param dayl vector with weekly average daylength ( can be created using the daylength function and with latitude input in this package)
 #' daylength for growth initialisation is an addition to the DH-model, it was not originally part of it.
 #' @param params vector of parameter values
 #' @param DH_plot whether output should be plotted or not, default is TRUE
@@ -20,20 +20,17 @@
 #' data(DH_model_ins)
 #'w = length(daily_tree_135)
 #'
-#'DH_out <-  run_DH_model_mod(Tair  = DH_model_ins$Inputs_GRA_3years$Tair,
-#'                        Rw        =  DH_model_ins$Inputs_GRA_3years$SW,
-#'                        Rw_vol    = TRUE
-#'                        Cpool     =  DH_model_ins$Inputs_GRA_3years$Cpool,
+#'DH_out <-  run_DH_model_mod(Tair  = DH_model_ins$Inputs_ABR_4years$Tair,
+#'                        Rw        =  DH_model_ins$Inputs_ABR_4years$SW,
+#'                        Rw_vol    = FALSE
+#'                        Cpool     =  DH_model_ins$Inputs_ABR_4years$Cpool,
 #'                        params    =   DH_model_ins$Parameters$best,
-#'                        week
-#'                        year,
+#'                        week = DH_model_ins$Inputs_ABR_4years$week,
+#'                        year = DH_model_ins$Inputs_ABR_4years$year.datetime.,
 #'                        DH_plot = TRUE)
+run_DH_model <- function(Tair,Rw,Rw_vol=FALSE,Cpool,dayl = NULL,week, year,params,DH_plot=TRUE) {
 
-run_DH_model <- function(Tair,Rw,Rw_vol=TRUE,Cpool,dayl = NULL,week, year,params,DH_plot=TRUE) {
 
-  #Tair<-DH_ins_weekly$Tair
-  # Rw<-DH_ins_weekly$SW
-  # Cpool<-DH_ins_weekly$Cpool
   w <- length(week)
   D_n<-rep(0,(w) )
   D_v<-rep(0,(w) )
@@ -53,11 +50,11 @@ run_DH_model <- function(Tair,Rw,Rw_vol=TRUE,Cpool,dayl = NULL,week, year,params
   dayl_min = params[10]
 
   # R_w_crit and chi serve as parameters "compensating" or adjusting for the
-  # probably wrong relative soil moisture values derived from LPJ-G.
-  # This is a way to make sure the soil mositure forcing, which is the most uncertain,
+  # probably wrong relative soil moisture values derived from model output ( if sw is from model output..)
+  # This is a way to make sure the soil moisture forcing, which is the most uncertain,
   # does not screw things up too much.
   # We could later determine the contribution of these parameters to the "more correct" simulation output.
-  # function from Wilkinson et al 2015.
+  # function from Wilkinson et al 2015:
   if(Rw_vol==TRUE){
     Rw<-1-1/(1+(Rw/R_w_crit)^chi)
   }
