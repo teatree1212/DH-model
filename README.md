@@ -5,8 +5,7 @@ Deleuze et Houllier 1998 model with some modifications
 Contains some forcing and parameter data for initial try-out of the model.
 
 
-# Install package (easier) 
-This is a private repo, so install_github does not easily work here. 
+# Install package 
 get help here:
 https://stackoverflow.com/questions/21171142/how-to-install-r-package-from-private-repo-using-devtools-install-github
 and follow the answer by Brandon Rose MD MPH
