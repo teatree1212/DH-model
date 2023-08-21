@@ -32,7 +32,7 @@ data('DH_model_ins')
 # and the parameter set you need for running the model. ( upper and lower parameter values for the 
 # are used for Sensitivity analysis and calibration and not necessary at the moment.)
 
-#for a description of the partemers stored in
+#for a description of the parameters stored in
 # DH_model_ins$Parameters see Wilkinson et al 2015,https://academic.oup.com/treephys/article-lookup/doi/10.1093/treephys/tpv010
 
 DH_out <-  run_DH_model(Tair    = DH_model_ins$Inputs_ABR_4years$Tair,
