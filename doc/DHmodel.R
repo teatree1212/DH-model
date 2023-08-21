@@ -1,0 +1,29 @@
+## ----setup, include = FALSE---------------------------------------------------
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+library(DHmodel)
+
+
+## ---- fig.show='hold'---------------------------------------------------------
+
+
+# load and prepare parameters and example input forcing data:
+# example forcing data carbon fluctuations and parameters
+data('DH_model_ins')
+# look at the object that was created. It contains forcing data I have prepared for three sites.
+# and the parameter set you need for running the model. ( upper and lower parameter values for the 
+# are used for Sensitivity analysis and calibration and not necessary at the moment.)
+
+#for a description of the paratmers stored in
+# DH_model_ins$Parameters see Wilkinson et al 2015,https://academic.oup.com/treephys/article-lookup/doi/10.1093/treephys/tpv010
+
+DH_out <-  run_DH_model(Tair    = DH_model_ins$Inputs_GRA_3years$Tair,
+                         Rw     = DH_model_ins$Inputs_GRA_3years$SW,
+                         Cpool  = DH_model_ins$Inputs_GRA_3years$Cpool,
+                         params = DH_model_ins$Parameters$best,
+                         week   = DH_model_ins$Inputs_GRA_3years$week,
+                         year   = DH_model_ins$Inputs_GRA_3years$year.datetime.,
+                         DH_plot = TRUE)
+
