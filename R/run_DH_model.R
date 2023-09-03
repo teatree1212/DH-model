@@ -16,13 +16,13 @@
 #'
 #' @export
 #' @examples
-#' # Other preparations to run the model
+#' # Load data and parameters in preparation to run the model
 #' data(DH_model_ins)
-#'w = length(daily_tree_135)
 #'
-#'DH_out <-  run_DH_model_mod(Tair  = DH_model_ins$Inputs_ABR_4years$Tair,
+#'# run model:
+#'DH_out <-  run_DH_model(Tair  = DH_model_ins$Inputs_ABR_4years$Tair,
 #'                        Rw        =  DH_model_ins$Inputs_ABR_4years$SW,
-#'                        Rw_vol    = FALSE
+#'                        Rw_vol    = FALSE,
 #'                        Cpool     =  DH_model_ins$Inputs_ABR_4years$Cpool,
 #'                        params    =   DH_model_ins$Parameters$best,
 #'                        week = DH_model_ins$Inputs_ABR_4years$week,
@@ -111,7 +111,7 @@ run_DH_model <- function(Tair,Rw,Rw_vol=FALSE,Cpool,dayl = NULL,week, year,param
     plot(Tair.df$dates,Tair.df$Tair,ylim=c(0,30),type="l",xaxt='n',xlab="",xaxs="i",yaxs="i",ylab="")
     mtext("Temperature (°C)",side=2,col="black",cex=0.7,line=3,outer=FALSE)
     abline(h=25,col = "lightgray", lty = 3)
-    abline(h=2.5,col = "lightgray", lty = 3)
+    abline(h=Tmin,col = "lightgray", lty = 3)
     par(new = T)
     plot(Tair.df$D_n,col="red",ylim=c(0.0,1.5), type ="p",xaxt='n',xlab="",yaxt='n',ylab="",xaxs="i",yaxs="i")
     mtext("cells/week",side=4,col="red",cex=0.7,line=3,outer=FALSE)
@@ -120,7 +120,7 @@ run_DH_model <- function(Tair,Rw,Rw_vol=FALSE,Cpool,dayl = NULL,week, year,param
 
     plot(Rw.df$dates,Rw.df$Rw,ylim=c(0,1.52), type="l",xaxt='n',xlab="",xaxs="i",yaxs="i",ylab="")
     mtext("Rw (-)",side=2,col="black",cex=0.7,line=3,outer=FALSE)
-    abline(h=0.5,col = "lightgray", lty = 3)
+    abline(h=Rwmin,col = "lightgray", lty = 3)
     par(new = T)
     plot(Rw.df$date,Rw.df$D_v,col="red",ylim=c(0.0,0.0074),xaxt='n',xlab="",yaxt='n',ylab="",xaxs="i",yaxs="i")
     mtext(expression(paste(Delta, " volume m3/week")),side=4,col="red",cex=0.7,line=3,outer=FALSE)
@@ -136,7 +136,7 @@ run_DH_model <- function(Tair,Rw,Rw_vol=FALSE,Cpool,dayl = NULL,week, year,param
     axis(4, ylim=c(0.0,0.0052), col="red",col.axis="red",las=1)
 
     par(mar=c(3,5,0,5))
-    plot(Cpool.df$dates,Dens.df$Dens,ylim=c(0,2000),xlab="", xaxt='n', ylab="Density(kg/m3)",xaxs="i",yaxs="i")
+    plot(Cpool.df$dates,Dens.df$Dens,ylim=c(0,2000),xlab="", xaxt='n', ylab="Density(kg/dm3)",xaxs="i",yaxs="i")
     # useful for later, when labelling the plots with a,b,c,d,..
     # mtext(side=3,line=-3.2,"(d)",adj=0,cex=1.2,padj=1,outer=TRUE)
 

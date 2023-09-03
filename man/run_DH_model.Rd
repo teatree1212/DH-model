@@ -43,13 +43,13 @@ Cpool is translated into mass gain. The model calculates the resulting density.
 Outputs a data frame with weekly entries of simulated density (Dens), ring increment ( Incr ), and cell numbers (Nr).
 }
 \examples{
-# Other preparations to run the model
+# Load data and parameters in preparation to run the model
 data(DH_model_ins)
-w = length(daily_tree_135)
 
-DH_out <-  run_DH_model_mod(Tair  = DH_model_ins$Inputs_ABR_4years$Tair,
+# run model:
+DH_out <-  run_DH_model(Tair  = DH_model_ins$Inputs_ABR_4years$Tair,
                        Rw        =  DH_model_ins$Inputs_ABR_4years$SW,
-                       Rw_vol    = FALSE
+                       Rw_vol    = FALSE,
                        Cpool     =  DH_model_ins$Inputs_ABR_4years$Cpool,
                        params    =   DH_model_ins$Parameters$best,
                        week = DH_model_ins$Inputs_ABR_4years$week,
