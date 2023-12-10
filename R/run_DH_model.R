@@ -95,13 +95,22 @@ run_DH_model <- function(Tair,Rw,Rw_vol=FALSE,Cpool,dayl = NULL,week, year,param
 
 
   # prepare output and plotting
-
+  
+ 
+  
   Tair.df<-data.frame(Tair=Tair,dates=ds,D_n=D_n)
   Rw.df<-data.frame(Rw=Rw,dates=ds,D_v=D_v)
   Cpool.df<-data.frame(Cpool=Cpool,dates=ds,D_m=D_m)
 
-  Incr<-D_n*D_v
-  Dens<-(D_m/D_v)*1000 # to convert dm^3 (Wilkinson 2015) # m^3 ( Cuny et al 2014)
+  
+  # convert to useable variables:
+  
+
+  Incr <- D_n*D_v 
+  # get ring increment in mm, making some assumptions:
+  Incr <- Incr * 1e+9 / (20 * 1000) / (1*1000) # * convert m3 to mm3. / (average cell tangential width = 39 micrometer, converted to mm) / length of average cell = 1 meter, converted to mm)
+  
+  Dens <- (D_m/D_v) # to convert dm^3 (Wilkinson 2015) # m^3 ( Cuny et al 2014) ### 1.42 g/cm3 v dens wood.
   Dens.df<-data.frame(Dens=Dens,weeks=week, years=year)
 
 
@@ -136,12 +145,14 @@ run_DH_model <- function(Tair,Rw,Rw_vol=FALSE,Cpool,dayl = NULL,week, year,param
     axis(4, ylim=c(0.0,0.0052), col="red",col.axis="red",las=1)
 
     par(mar=c(3,5,0,5))
-    plot(Cpool.df$dates,Dens.df$Dens,ylim=c(0,2000),xlab="", xaxt='n', ylab="Density(kg/dm3)",xaxs="i",yaxs="i")
+    plot(Cpool.df$dates,Dens.df$Dens,ylim=c(0,2),xlab="", xaxt='n', ylab="Density(g/cm3)",xaxs="i",yaxs="i")
     # useful for later, when labelling the plots with a,b,c,d,..
     # mtext(side=3,line=-3.2,"(d)",adj=0,cex=1.2,padj=1,outer=TRUE)
 
     #axis(1, at=seq(1,52,52), labels=2000)
-    axis(1,at= c(1,52,52*2,52*3),unique(Dens.df$year))
+    yrs <- unique(year)
+    nyrs <- length(yrs)
+    axis(1,at=c(seq(1,nyrs*52,length.out = nyrs)),labels=yrs)
     mtext("Years", side=1 ,col="black",cex=1,line=2,outer=FALSE)
 
   }
