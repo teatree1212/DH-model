@@ -149,10 +149,10 @@ run_DH_model <- function(Tair,Rw,Rw_vol=FALSE,Cpool,dayl = NULL,week, year,param
     # useful for later, when labelling the plots with a,b,c,d,..
     # mtext(side=3,line=-3.2,"(d)",adj=0,cex=1.2,padj=1,outer=TRUE)
 
-    #axis(1, at=seq(1,52,52), labels=2000)
-    yrs <- unique(year)
-    nyrs <- length(yrs)
-    axis(1,at=c(seq(1,nyrs*52,length.out = nyrs)),labels=yrs)
+    #add year labels to x-axis
+    year_starts <- which(Dens.df$week == 1)
+    year_labels <- Dens.df$year[year_starts]
+    axis(1, at = year_starts, labels = year_labels)
     mtext("Years", side=1 ,col="black",cex=1,line=2,outer=FALSE)
 
   }
